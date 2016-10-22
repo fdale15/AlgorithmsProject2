@@ -42,6 +42,8 @@ struct Course
 //Generates a graph as an adjacency list.
 class CourseGraphGenerator
 {
+	//Pattern to match course names like CSCI 3330.
+	const string CoursePattern = "[A-Z]{2,5} [0-9]{4}";
 	vector<string> _rawCourseData;
 
 	//Returns a list of courses as a shared_ptr to a vector of courses.

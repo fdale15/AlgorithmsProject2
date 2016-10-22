@@ -10,7 +10,7 @@ int main()
 
 	auto graph = cgg.GetCourseGraph();
 
-	Utilities::PrintVector(graph);
+	Utilities::PrintMap(graph);
 
 	int i;
 	cin >> i;

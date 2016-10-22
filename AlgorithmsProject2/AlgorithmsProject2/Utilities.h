@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
+#include "CourseGraphGenerator.h"
+#include "CourseGraphGenerator.h"
 
 using namespace std;
 
@@ -77,4 +79,19 @@ namespace Utilities
 
 		return result;
 	}
+
+	//Prints a map of object from the provided pointer.
+	//PrePrint allows you to optionally print something ahead of the object.
+	//PostPrint allows you to optionally print something after the object.
+	template <typename T1, typename T2>
+	static void PrintMap(shared_ptr<unordered_map<T1, T2>> mp, string prePrint = "", string postPrint = "")
+	{
+		auto copy = *(mp.get());
+
+		for (const pair<T1, T2> item : copy)
+		{
+			cout << prePrint << item.second << postPrint << endl;
+		}
+	}
+
 }

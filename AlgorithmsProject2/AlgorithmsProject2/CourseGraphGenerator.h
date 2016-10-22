@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include <iostream>
 #include <memory>
 #include "Utilities.h"
@@ -46,14 +47,14 @@ class CourseGraphGenerator
 	const string CoursePattern = "[A-Z]{2,5} [0-9]{4}";
 	vector<string> _rawCourseData;
 
-	//Returns a list of courses as a shared_ptr to a vector of courses.
-	shared_ptr<vector<Course>> getCourseList();
-	//Add prerequisites to a vector of courses.
-	void addPrereqs(shared_ptr<vector<Course>> courses);
+	//Returns a list of courses as a shared_ptr to a map of courses with the course.Name as the key.
+	shared_ptr<unordered_map<string, Course>> getCourseList();
+	//Add prerequisites to a map of courses.
+	void addPrereqs(shared_ptr<unordered_map<string, Course>> courses);
 
 public:
 
 	CourseGraphGenerator();
 	//Returns the fully populated graph of courses as an adjacency list.
-	shared_ptr<vector<Course>> GetCourseGraph();
+	shared_ptr<unordered_map<string, Course>> GetCourseGraph();
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include <regex>
+#include <memory>
 #include <algorithm>
 #include "CourseGraphGenerator.h"
 #include "Utilities.h"
@@ -8,59 +9,55 @@ using namespace std;
 
 CourseGraphGenerator::CourseGraphGenerator()
 {
-  _rawCourseData = Utilities::ReadFile("data.txt");
+	_rawCourseData = Utilities::ReadFile("data.txt");
 }
 
 
-vector<Course> CourseGraphGenerator::getCourseList()
+shared_ptr<vector<Course>> CourseGraphGenerator::getCourseList()
 {
-  auto result = vector<Course>();
+	auto result = make_shared<vector<Course>>();
 
-  smatch matches;
-  regex exp("[A-Z]{2,5} [0-9]{4}");
+	regex exp("[A-Z]{2,5} [0-9]{4}");
 
-  for (auto line : _rawCourseData)
-  {
-    regex_search(line, matches, exp);
+	for (auto line : _rawCourseData)
+	{
+		auto matches = Utilities::MatchAll(line, exp);
 
-    if (matches.size() > 0)
-    {
-      Course c(matches[0]);
-      result.push_back(c);
-    }
-  }
+		if (matches.size() > 0)
+		{
+			result->push_back(matches[0]);
+		}
+	}
 
-  return result;
+	return result;
 }
 
-vector<Course> CourseGraphGenerator::addPrereqs(vector<Course> courses)
+void CourseGraphGenerator::addPrereqs(shared_ptr<vector<Course>> courses)
 {
-  smatch matches;
-  regex exp("[A-Z{2,5}\\ [0-9]{4}");
+	regex exp("[A-Z]{2,5} [0-9]{4}");
 
-  for (auto line : _rawCourseData)
-  {
-    regex_search(line, matches, exp);
+	for (auto line : _rawCourseData)
+	{
+		auto matches = Utilities::MatchAll(line, exp);
 
-    if (matches.size() > 0)
-    {
-      for (auto match : matches)
-      {
-        cout << match << endl;
-        if (match != matches[0])
-          for_each(courses.begin(), courses.end(), [&](auto course){
-              if (course.Name == match)
-                course.PrereqFor.push_back(matches[0]);
-              cout << match << " : " << course.Name << endl;
-          });
-      }
-    }
-  }
-
-  return courses;
+		if (matches.size() > 0)
+		{
+			for (auto strMatched : matches)
+			{
+				if (strMatched != matches[0])
+					for_each(courses->begin(), courses->end(), [&](auto course)
+					         {
+						         if (course.Name == strMatched)
+							         course.PrereqFor->push_back(matches[0]);
+					         });
+			}
+		}
+	}
 }
 
-vector<Course> CourseGraphGenerator::GetCourseGraph()
+shared_ptr<vector<Course>> CourseGraphGenerator::GetCourseGraph()
 {
-  return addPrereqs(getCourseList());
+	auto courseList = getCourseList();
+	addPrereqs(courseList);
+	return courseList;
 }

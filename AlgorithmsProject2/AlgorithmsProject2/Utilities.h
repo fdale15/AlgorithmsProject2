@@ -45,10 +45,11 @@ namespace Utilities
 
 	//Accepts a string and a regular expression.  
 	//Returns all occurences of the pattern in a vector of strings.
-	static vector<string> MatchAll(string line, regex exp)
+	static vector<string> MatchAll(string line, string expresssion)
 	{
 		auto result = vector<string>();
 		smatch matches;
+		regex exp(expresssion);
 
 		//Starts at the beginning of the string.
 		auto startPoint = line.cbegin();

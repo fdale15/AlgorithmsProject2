@@ -18,13 +18,11 @@ shared_ptr<vector<Course>> CourseGraphGenerator::getCourseList()
 {
 	auto result = make_shared<vector<Course>>();
 
-	regex exp("[A-Z]{2,5} [0-9]{4}");
-
 	//For each line, extract the name of the course.
 	//This is the first match of the list provided to us.
 	for (auto line : _rawCourseData)
 	{
-		auto matches = Utilities::MatchAll(line, exp);
+		auto matches = Utilities::MatchAll(line, CoursePattern);
 
 		if (matches.size() > 0)
 		{
@@ -38,13 +36,11 @@ shared_ptr<vector<Course>> CourseGraphGenerator::getCourseList()
 //Add prerequisites to a vector of courses.
 void CourseGraphGenerator::addPrereqs(shared_ptr<vector<Course>> courses)
 {
-	regex exp("[A-Z]{2,5} [0-9]{4}");
-
 	//For each line extract all the course names.
 	//The first is the name of the course, the following are prerequisites.
 	for (auto line : _rawCourseData)
 	{
-		auto matches = Utilities::MatchAll(line, exp);
+		auto matches = Utilities::MatchAll(line, CoursePattern);
 
 		if (matches.size() > 0)
 		{

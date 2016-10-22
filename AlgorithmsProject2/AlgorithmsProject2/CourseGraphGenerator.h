@@ -1,46 +1,51 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "Utilities.h"
 
 using namespace std;
 
 struct Course
 {
-  string Name;
-  vector<string> PrereqFor;
+	string Name;
+	shared_ptr<vector<string>> PrereqFor;
 
-  Course()
-  {
-      Name = "";
-      PrereqFor = vector<string>();
-  }
-  Course(string name)
-  {
-    Name = name;
-    PrereqFor = vector<string>();
-  }
+	Course()
+	{
+		Name = "";
+		PrereqFor = make_shared<vector<string>>();
+	}
 
-  friend ostream& operator<<(ostream& stream, const Course& c)
-  {
-    stream << "Name: " << c.Name << endl;
-    stream << "Prerequisites:" << endl;
-    Utilities::PrintVector(c.PrereqFor);
-    stream << "------------------------" << endl;
+	Course(string name)
+	{
+		Name = name;
+		PrereqFor = make_shared<vector<string>>();
+	}
 
-    return stream;
-  }
+	friend ostream& operator<<(ostream& stream, const Course& c)
+	{
+		stream << "Name: " << c.Name << endl;
+		if (c.PrereqFor->size() > 0)
+		{
+			stream << "Prerequisite for:" << endl;
+			Utilities::PrintVector(c.PrereqFor, "\t*");
+		}
+		stream << "------------------------" << endl;
+		
+		return stream;
+	}
 };
 
 class CourseGraphGenerator
 {
-  vector<string> _rawCourseData;
+	vector<string> _rawCourseData;
+
+	shared_ptr<vector<Course>> getCourseList();
+	void addPrereqs(shared_ptr<vector<Course>> courses);
 
 public:
 
-  vector<Course> getCourseList();
-  vector<Course> addPrereqs(vector<Course> courses);
-
-  CourseGraphGenerator();
-  vector<Course> GetCourseGraph();
+	CourseGraphGenerator();
+	shared_ptr<vector<Course>> GetCourseGraph();
 };

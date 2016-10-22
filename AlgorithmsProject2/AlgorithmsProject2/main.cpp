@@ -1,13 +1,17 @@
 #include "CourseGraphGenerator.h"
+#include <regex>
 #include "Utilities.h"
 
 using namespace std;
 
 int main()
 {
-    CourseGraphGenerator cgg;
+	CourseGraphGenerator cgg;
 
-    //Utilities::PrintVector(cgg.GetCourseGraph());
+	auto graph = cgg.GetCourseGraph();
 
-    cgg.addPrereqs(cgg.getCourseList());
+	Utilities::PrintVector(graph);
+
+	int i;
+	cin >> i;
 }

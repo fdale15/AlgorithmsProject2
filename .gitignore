@@ -1,2 +1,9 @@
 AlgorithmsProject2/AlgorithmsProject2.VC.VC.opendb
 *.suo
+*.suo
+*.tlog
+*.log
+*.obj
+*.idb
+*.pdb
+*.ilk

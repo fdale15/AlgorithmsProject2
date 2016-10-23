@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include <unordered_map>
+#include <map>
+#include <tuple>
 #include <iostream>
 #include <memory>
 #include "Utilities.h"
@@ -35,7 +36,7 @@ struct Course
 			Utilities::PrintVector(c.PrereqFor, "\t*");
 		}
 		stream << "------------------------" << endl;
-		
+
 		return stream;
 	}
 };
@@ -48,13 +49,13 @@ class CourseGraphGenerator
 	vector<string> _rawCourseData;
 
 	//Returns a list of courses as a shared_ptr to a map of courses with the course.Name as the key.
-	shared_ptr<unordered_map<string, Course>> getCourseList();
+	shared_ptr<map<string, Course>> getCourseList();
 	//Add prerequisites to a map of courses.
-	void addPrereqs(shared_ptr<unordered_map<string, Course>> courses);
+	tuple<string, vector<string>> addPrereqs(shared_ptr<map<string, Course>> courses, string course, vector<string> prereqs);
 
 public:
 
 	CourseGraphGenerator();
 	//Returns the fully populated graph of courses as an adjacency list.
-	shared_ptr<unordered_map<string, Course>> GetCourseGraph();
+	shared_ptr<map<string, Course>> GetCourseGraph();
 };

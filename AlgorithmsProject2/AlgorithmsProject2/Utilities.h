@@ -4,8 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
-#include "CourseGraphGenerator.h"
-#include "CourseGraphGenerator.h"
+#include <map>
 
 using namespace std;
 
@@ -45,7 +44,7 @@ namespace Utilities
 		}
 	}
 
-	//Accepts a string and a regular expression.  
+	//Accepts a string and a regular expression.
 	//Returns all occurences of the pattern in a vector of strings.
 	static vector<string> MatchAll(string line, string expresssion)
 	{
@@ -84,7 +83,7 @@ namespace Utilities
 	//PrePrint allows you to optionally print something ahead of the object.
 	//PostPrint allows you to optionally print something after the object.
 	template <typename T1, typename T2>
-	static void PrintMap(shared_ptr<unordered_map<T1, T2>> mp, string prePrint = "", string postPrint = "")
+	static void PrintMap(shared_ptr<map<T1, T2>> mp, string prePrint = "", string postPrint = "")
 	{
 		auto copy = *(mp.get());
 

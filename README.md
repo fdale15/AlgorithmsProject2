@@ -34,8 +34,7 @@ In this form, the prerequisites are the second and onward elements of the first 
 
 To create a Directed Acyclic Graph from this.
   1. Loop through the lines, extract the first element, and add it to a list.
-  2. Loop through the lines again, and, for each element after the first, add the first element to the prerequisite courses lists.
-  
+  2. Call the addPrereqs method passing in the list of courses, current course, and prerequisites for that course.
 </a>
 ---
 <a id="2">

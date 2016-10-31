@@ -1,0 +1,31 @@
+MATH 1390	College Algebra
+MATH 1591	Calculus I
+CSCI 1470	Computer Science I
+CSCI 1480	Computer Science II
+CSCI 2440	Assembly Language and Computer Organization
+CSCI 3380	Computer Architecture
+CSCI 2320	Data Structures
+CSCI 3385	Artificial Intelligence
+CSCI 3381	Object-Oriented Software Development with Java
+CSCI 4490	Software Engineering
+CSCI 3370	Principles of Programming Languages
+CSCI 3360	Database Systems
+CSCI 4370	Data Mining
+CSCI 3350	File Structures
+CSCI 3345	Human-Computer Interaction
+CSCI 3335	Networking
+CSCI 4355	Distributed Object Computing
+CSCI 3190	Social Implications of Technology
+MATH 2330	Discrete Mathematics
+CSCI 4390	Theory of Computation
+CSCI 3330	Algorithms
+CSCI 4365	Web Technology
+CSCI 4315	Information Security
+CSCI 4300	Operating Systems
+CSCI 4345	Introduction to Real-Time System Concepts and Implementation
+MATH 3320	Linear Algebra
+CSCI 4350	Computer Graphics
+CSCI 4310	Introduction to Scientific Computing
+CSCI 4340	Introduction to Parallel Programming
+CSCI 4320	Compiler Construction
+CSCI 4353	Introduction to Multimedia Computing

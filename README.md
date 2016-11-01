@@ -3,12 +3,10 @@ Graph theory problem. Quickest path through college.
 
 |What needs done:| Progress|
 |:----------------|:------------|
-|[1. Represent the graph by using an adjacency list or matrix.](#1)|FINISHED|
-|[2. Implement DFS algorithm for the adjacency list and Course struct.](#2)||
-|[3. Modify DFS algorithm to record pre/post visits.](#3)||
-|[4. Implement topological ordering algorithm.](#4)||
-|[5. Design algorithm to generate semester courses.](#5)|FINISHED|
-|[6. Implement algorithm to generate semester courses.](#6)||
+|[1. Represent the graph by using an adjacency list or matrix.](#1)|
+|[2. Implement DFS algorithm for the adjacency list and Course struct.](#2)|
+|[3. Modify DFS algorithm to record pre/post visits.](#3)|
+|[4. Design algorithm to generate semester courses.](#5)|
 
 <a id="1">
 #Represent Graph as Data Structure.
@@ -92,50 +90,64 @@ for (auto nextCourse : node.PrereqFor)
     //Not visited before.
 }
 ```
+
+I used an 
+```cpp
+unordered_map<string, bool>
+```
+to keep track of whether or not we had visited a node.
+
 </a>
 ---
 <a id="3">
-#Modify DFS algorithm to Record Pre/Post Visits
+#Modify DFS algorithm to get Topological Orderings
 
-This part is very straightforward as well.  I would probably use a tuple<int, int> or create a simple struct and store that in an unordered map like so:
+This part is very straightforward as well.  Since the last post-visit is of first intrest to us, we can use a stack to store the topological ordering.
 
 ```cpp
-struct Visit
-{
-  int PreVisit;
-  int PostVisit;
-};
+unordered_map<string, bool> _visits;
+vector<string> _topologicalOrdering;
 
-int count = 0;
-unordered_map<string, Visit> DFS(shared_ptr<unordered_map<string, Course>> graph)
+void DFS(shared_ptr<unordered_map<string, Course>> graph)
 {
-  auto visits = unordered_map<string, Visit>();
-  
   for (auto node : *graph)
   {
-    auto visit = Visit();
-
-    //do visit.PreVisit = ++count and visit.PostVisit = ++count at appropriate point.
-    //do DFS.
-    
-    //This will add the visit to the visits.
-    visits[node.First] = visit;
+    Explore(graph, node);
   }
-  return visits;
+}
+
+void Explore(shared_ptr<unordered_map<string, Course>> graph, Course node)
+{
+  if (!_visits[node.Name])
+  {
+    _visits[node.Name] = true;
+    
+    for (auto childNode : *(node.PrereqsFor))
+    {
+      Explore(graph, childNode);
+      
+      //This would be the post-visit. We can add the course to our stack here.
+      _topologicalOrdering.push_back(childNode.Name);
+    }
+  }
 }
 ```
-</a>
----
-<a id="4">
-#Implement Topological Ordering Algorithm
+At the end, we have a ```cpp vector<string> ``` of classes in topological order.
 
-Essentially, all you need to do is sort the visits in order of descending post-visits.
-
-If you stored the visits like I mentioned in [Section 3](#3) then it may be a little harder to do it intuitively.  I would suggest extracting all the post visits and sorting the numbers.  Then loop through the visits again and pull out the names of the courses in the correct order.
 </a>
 ---
 <a id="5">
+#Design Algorithm to Generate Semester Courses
+
+This part was the trickiest part and depended on your designs to the above problems.
+
+1. Cycle through the courses in topological order.
+2. Determine whether or not you could enroll in the course.
+  1.  If a course you were currently enrolled in was a prerequisite for a prospect course, you could not enroll.
+  2.  If a course that you could not enroll in was as prerequisite for a prospect course, you could not enroll.
+  3.  Otherwise, you were free to enroll in the course.
+3. Remove enrolled courses from topological order, preserving order.
+4. Repeat with remaining courses for the next semester.
+
 </a>
 ---
-<a id="6">
-</a>
